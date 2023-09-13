@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace compression;
 
 public class CompressionTests
@@ -29,6 +31,11 @@ public class CompressionTests
         Console.WriteLine($"Original Length: {message.Length} Encoded length: {compressed.EncodedLength()}");
     }
 
+    [Test]
+    public void CanUseStreamsLongerThan1Bigger()
+    {
+        Assert.AreEqual("abcbcbcbcbcbcbdaaaaaaeaaaeaaaeaa", CompressedString.Decompress("abcdae", new int[] { 3, 2, 1 }, new int[] { 2, 1, 4 }, new int[] { 11, 5, 10 }));
+    }
 }
 
 public class DequeTests
@@ -376,16 +383,4 @@ public class DoubleEndedArrayQueueRemoval
         Assert.AreEqual(2, q.Capacity());
     }
 
-}
-
-public class ArrayQueue
-{
-    public static string Decode(string c, int[] take, int[] back, int[] copy)
-    {
-        c = "abcdef";
-        take = new int[] { 2, 1, 3 };
-        back = new int[] { 2, 3, 4 };
-        copy = new int[] { 5, 7, 10 };
-        return "";
-    }
 }
